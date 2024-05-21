@@ -1,6 +1,6 @@
 package sample.views;
 
-/*
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -875,96 +875,5 @@ public class MenuTablas extends Stage {
     }
 
 }
-*/
-
-
-import javafx.scene.control.*;
-import javafx.scene.image.*;
-import javafx.scene.layout.*;
-import java.sql.*;
-
-public class MenuTablas {
-    private GridPane gridPane;
-
-    private void LimpiarGridPane() {
-        gridPane.getChildren().clear();
-    }
-
-    private Button createButtonWithIcon(String iconUrl, String buttonText) {
-        Button button = new Button();
-        ImageView imageView = new ImageView(new Image(iconUrl));
-        imageView.setFitWidth(55); // Ajustar el ancho del icono
-        imageView.setPreserveRatio(true); // Mantener la relación de aspecto del icono
-        Label label = new Label(buttonText);
-        VBox vbox = new VBox();
-        vbox.getChildren().addAll(imageView, label);
-        vbox.setAlignment(javafx.geometry.Pos.CENTER);
-        button.setGraphic(vbox);
-        return button;
-    }
-
-    private void MostrarDesayunos() {
-        LimpiarGridPane();
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/taqueria2", "adminTacos2", "123");
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT id, nombre, categoria FROM platos WHERE categoria = 'desayuno'");
-
-            int row = 0;
-            int col = 0;
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String categoria = rs.getString("categoria");
-                String iconoURL = IconManager.getIconURL(nombre, categoria);
-
-                insertarCategoriaEnOrden(categoria);
-
-                Button btnBebida = createButtonWithIcon(iconoURL, nombre);
-                btnBebida.setOnAction(event -> {
-                    // Aquí puedes agregar lógica adicional al hacer clic en el botón
-                });
-
-                gridPane.add(btnBebida, col, row);
-
-                col++;
-                if (col == 4) {
-                    col = 0;
-                    row++;
-                }
-            }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-
-            mostrarBotonesCaja();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Métodos similares para otras categorías...
-
-    private void insertarCategoriaEnOrden(String categoria) {
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/taqueria2", "adminTacos2", "123");
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO orden (categoria) VALUES (?)");
-            pstmt.setString(1, categoria);
-            pstmt.executeUpdate();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void mostrarBotonesCaja() {
-        // Aquí implementa la lógica para mostrar los botones en la caja
-    }
-}
-
-
-
 
 
