@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/TaqueriaPRUEBASSSSS2_0.iml" filepath="$PROJECT_DIR$/TaqueriaPRUEBASSSSS2_0.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/ActProyBD_taqueria.iml" filepath="$PROJECT_DIR$/ActProyBD_taqueria.iml" />
+>>>>>>> a5265c8a1392544af5a42163df12ba4728f51e19
     </modules>
   </component>
 </project>
